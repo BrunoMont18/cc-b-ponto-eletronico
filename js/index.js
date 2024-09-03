@@ -1,74 +1,71 @@
-const diaSemana = document.getElementById("dia-semana");
-const diaMesAno = document.getElementById("dia-mes-ano");
-const horaMinSeg = document.getElementById("hora-min-seg");
+const diaSemana = document.getElementById("dia");
+const dataAtual = document.getElementById("data");
+const horaAtual = document.getElementById("hora");
 
-const btnBaterPonto = document.getElementById("btn-bater-ponto");
-btnBaterPonto.addEventListener("click", register);
-dialogPonto.showModel();
+// Seleciona os elementos para o diálogo e o botão de bater ponto
+const pontoDialog = document.getElementById("pontoDialog");
+const baterPontoButton = document.querySelector(".Bater-ponto");
+const fecharDialogButton = document.getElementById("fecharDialog");
 
-diaSemana.textContent = getWeekDay();
-diaMesAno.textContent = getCurrentDate();
-
-
-function getWeekDay(){
+// Atualiza o dia da semana
+const diasDaSemana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
+function getDayOfWeek() {
     const date = new Date();
-    let days = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
-    return days[date.getDay()];  
+    return diasDaSemana[date.getDay()];
 }
 
-function getCurrentDate() {
-    //Considerar os métodos abaixo para incluir zeros em números < 10
-    //padStart()
-    //slice()
-    // formatos de hora considerando o local do usuario
+diaSemana.textContent = getDayOfWeek();
+dataAtual.textContent = getCurrentDate(false);  // false para formato padrão dd/mm/yyyy
+horaAtual.textContent = getCurrentTime();
+
+// Abre o diálogo ao clicar no botão "Bater em CLT - ponto"
+baterPontoButton.addEventListener('click', () => {
+    pontoDialog.showModal(); // Abre o diálogo como modal
+});
+
+// Fecha o diálogo ao clicar no botão "Fechar"
+fecharDialogButton.addEventListener('click', () => {
+    pontoDialog.close(); // Fecha o diálogo
+});
+
+// Atualiza a hora em tempo real
+setInterval(() => {
+    horaAtual.textContent = getCurrentTime();
+}, 1000);
+
+let usTime = false;
+
+function arrumaMes() {
     const date = new Date();
-    let month = date.getMonth();
-    let day = date.getDay();
-
-    if (day < 10) {
-        day = "0" + day 
-    }
-
-    if (month < 10 ) {
-        month = "0" + (month + 1)
-    }
-
-    return day + "/" + month + "/" + date.getFullYear();
+    let mesMaisUm = date.getMonth() + 1;
+    return mesMaisUm < 10 ? "0" + mesMaisUm : mesMaisUm;
 }
 
-function getCurrentHour() {
-    //Considerar os métodos abaixo para incluir zeros em números < 10
-    //padStart()
-    //slice()
+function arrumaDataParaUs() {
     const date = new Date();
-    let hour = date.getHours();
-    let min = date.getMinutes();
-    let seg = date.getSeconds();
-
-    if (hour < 10) {
-        hour = "0" + hour
-    }
-
-    if (min < 10) {
-        min = "0" + min
-    }
-
-    if (seg < 10) {
-        seg = "0" + seg
-    }
-
-    return hour + ":" + min + ":" + seg;
+    return arrumaMes() + "/" + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "/" + date.getFullYear();
 }
 
-function printCurrentHour() {
-    horaMinSeg.textContent = getCurrentHour();
+function getCurrentDate(ustime) {
+    const date = new Date();
+    let dia = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    if (ustime) {
+        return arrumaDataParaUs();
+    }
+    return dia + "/" + arrumaMes() + "/" + date.getFullYear();
 }
 
-function register() {
-//Abrir <dialog> ou nom mínimo 4 botões
-    alert("Bater Ponto");
-}
+function getCurrentTime() {
+    const date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
 
-setInterval(printCurrentHour, 1000);
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
+    return hours + ":" + minutes + ":" + seconds;
+}
 
 
