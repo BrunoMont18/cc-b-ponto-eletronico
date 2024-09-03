@@ -1,3 +1,7 @@
+navigator.geolocation.getCurrentPosition((position) => {
+    console.log(position);
+});
+
 const diaSemana = document.getElementById("dia");
 const dataAtual = document.getElementById("data");
 const horaAtual = document.getElementById("hora");
@@ -7,7 +11,12 @@ const pontoDialog = document.getElementById("pontoDialog");
 const baterPontoButton = document.querySelector(".Bater-ponto");
 const fecharDialogButton = document.getElementById("fecharDialog");
 
-// Atualiza o dia da semana
+const dialogData = document.getElementById("dialog-data");
+dialogData.textContent = "Data: " + getCurrentDate();
+
+const dialogHora = document.getElementById("dialog-hora");
+dialogHora.textContent = "Hora: " + getCurrentTime();
+
 const diasDaSemana = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
 function getDayOfWeek() {
     const date = new Date();
@@ -25,7 +34,7 @@ baterPontoButton.addEventListener('click', () => {
 
 // Fecha o diálogo ao clicar no botão "Fechar"
 fecharDialogButton.addEventListener('click', () => {
-    pontoDialog.close(); // Fecha o diálogo
+    pontoDialog.close(); 
 });
 
 // Atualiza a hora em tempo real
@@ -67,4 +76,3 @@ function getCurrentTime() {
 
     return hours + ":" + minutes + ":" + seconds;
 }
-
