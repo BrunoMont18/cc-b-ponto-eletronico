@@ -68,4 +68,3 @@ function getCurrentTime() {
     return hours + ":" + minutes + ":" + seconds;
 }
 
-

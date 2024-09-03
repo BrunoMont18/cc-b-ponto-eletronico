@@ -4,19 +4,8 @@
     justify-content: center;
 }
 
-#dialog-ponto{
-    border: 0;
-}
-
-#fechar-dialog{
-    background-color: lightgray;
+#fecharDialog {
     position: absolute;
-    top:0;
-    right:0;
-    border: 0;
-}
-
-#fechar-dialog:hover{
-    text-decoration: underline;
-    background: palevioletred;
+    top: 0;
+    right: 0;
 }
